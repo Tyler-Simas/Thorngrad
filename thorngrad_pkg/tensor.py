@@ -51,7 +51,7 @@ class Tensor:
     
     def __rsub__(self, other):
         from . import ops
-        return ops.rsub(other, self)
+        return ops.sub(other, self)
     
     def __rmul__(self, other):
         from . import ops
@@ -59,7 +59,7 @@ class Tensor:
     
     def __rtruediv__(self, other):
         from . import ops
-        return ops.rtruediv(other, self)
+        return ops.truediv(other, self)
     
     
     # ------ Backward ------- #
