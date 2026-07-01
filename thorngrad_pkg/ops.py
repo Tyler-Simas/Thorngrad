@@ -106,3 +106,42 @@ def pow(a, exponent):
             a.grad += (exponent * a.data ** (exponent - 1)) * out.grad
     out._backward = _backward
     return out
+
+# ---------- Some Matrix Ops (Sum, Mean, Reshape) ---------------
+
+def sum(a, axis=None, keepdims=False):
+    a = _to_tensor(a)
+    out_data = a.data.sum(axis=axis, keepdims=keepdims) # using NumPy sum
+    out_tensor = Tensor(out_data, _children=(a,), _op ='sum')
+
+    def _backward():
+        if a.requires_grad:
+            grad = out_tensor.grad # initialize the gradient as zeros
+            if axis is not None and not keepdims:
+                grad = np.expand_dims(grad, axis) # gets rid of all other dimensions besides the one we want the gradient for
+            a.grad += np.ones_like(a.data) * grad
+    out_tensor._backward = _backward
+    return out_tensor
+
+def mean(a, axis = None, keepdims = False):
+    a = _to_tensor(a)
+    out_data = a.data.mean(axis=axis, keepdims=keepdims) # using NumPy sum
+    out_tensor = Tensor(out_data, _children=(a,), _op ='sum')
+
+    def _backward():
+        a = _to_tensor(a)
+        s = sum(a, axis=axis, keepdims=keepdims) # uses the sum function defined above
+        n = a.data.size / s.data.size
+        return truediv(s, n) # divides the sum output s by n to get the average
+
+def reshape(a, new_shape):
+    a = _to_tensor(a)
+    out_data = a.data.reshape(new_shape)
+    out_tensor = Tensor(out_data, _children=(a,), _op='reshape')
+
+    def _backward():
+        if a.requires_grad:
+            a.grad += out_tensor.grad.reshape(a.data.shape)
+        out_tensor._backward = _backward
+        return out_tensor
+        
