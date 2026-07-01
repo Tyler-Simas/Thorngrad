@@ -61,6 +61,18 @@ class Tensor:
         from . import ops
         return ops.truediv(other, self)
     
+    # --------- Some Matrix Operations -----------
+    def sum(self, axis=None, keepdims=False):
+        from . import ops
+        return ops.sum(self, axis=axis, keepdims=keepdims)
+
+    def mean(self, axis=None, keepdims=False):
+        from . import ops
+        return ops.mean(self, axis=axis, keepdims=keepdims)
+
+    def reshape(self, new_shape):
+        from . import ops
+        return ops.reshape(self, new_shape)
     
     # ------ Backward ------- #
 
