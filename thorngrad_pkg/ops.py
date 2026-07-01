@@ -125,14 +125,9 @@ def sum(a, axis=None, keepdims=False):
 
 def mean(a, axis = None, keepdims = False):
     a = _to_tensor(a)
-    out_data = a.data.mean(axis=axis, keepdims=keepdims) # using NumPy sum
-    out_tensor = Tensor(out_data, _children=(a,), _op ='sum')
-
-    def _backward():
-        a = _to_tensor(a)
-        s = sum(a, axis=axis, keepdims=keepdims) # uses the sum function defined above
-        n = a.data.size / s.data.size
-        return truediv(s, n) # divides the sum output s by n to get the average
+    s = sum(a, axis=axis, keepdims=keepdims) # uses the sum function defined above
+    n = a.data.size / s.data.size
+    return truediv(s, n) # divides the sum output s by n to get the average
 
 def reshape(a, new_shape):
     a = _to_tensor(a)
@@ -142,6 +137,6 @@ def reshape(a, new_shape):
     def _backward():
         if a.requires_grad:
             a.grad += out_tensor.grad.reshape(a.data.shape)
-        out_tensor._backward = _backward
-        return out_tensor
+    out_tensor._backward = _backward
+    return out_tensor
         
