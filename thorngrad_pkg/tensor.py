@@ -74,6 +74,19 @@ class Tensor:
         from . import ops
         return ops.reshape(self, new_shape)
     
+    # -------- Functions ---------
+    def relu(self):
+      from . import functional as F
+      return F.relu(self)
+
+    def sigmoid(self):
+      from . import functional as F
+      return F.sigmoid(self)
+
+    def softmax(self, axis=-1):
+      from . import functional as F
+      return F.softmax(self, axis=axis)
+
     # ------ Backward ------- #
 
     def backward(self):
