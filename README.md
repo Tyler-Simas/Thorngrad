@@ -94,7 +94,7 @@ $$
 Weights are initialized as:
 
 $$
-W \sim \mathcal{N}(0, 1) \times \sqrt{\frac{1}{\text{in\_features}}}
+W \sim \mathcal{N}(0, 1) \times \sqrt{\dfrac{1}{n_{\text{in}}}}
 $$
 
 scaling down the variance of each weight in proportion to the number of inputs being summed, so output magnitude stays roughly stable regardless of layer width — preventing vanishing/exploding activations from the very first forward pass.
