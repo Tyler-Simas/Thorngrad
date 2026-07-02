@@ -1,0 +1,4 @@
+numpy		# core dependency - Tensor backend
+pytest		# test runner
+torch		# used only in tests to verify gradients
+matplotlib	# used only in examples/ for plotting results
