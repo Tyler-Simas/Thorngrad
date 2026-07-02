@@ -100,7 +100,7 @@ $$
 scaling down the variance of each weight in proportion to the number of inputs being summed, so output magnitude stays roughly stable regardless of layer width — preventing vanishing/exploding activations from the very first forward pass.
 
 ## Module Separation
-Rather than a single file (as in the Karpathy's scalar-based tutorial), the engine is split into `tensor.py` (core data structure + graph mechanics), `ops.py` (arithmetic), `functional.py` (activations), `nn.py` (layers/models), and `optim.py` (training). This keeps each file testable in isolation and mirrors how production frameworks separate concerns.
+Rather than a single file (as in Karpathy's scalar-based tutorial), the engine is split into `tensor.py` (core data structure + graph mechanics), `ops.py` (arithmetic), `functional.py` (activations), `nn.py` (layers/models), and `optim.py` (training). This keeps each file testable in isolation and mirrors how production frameworks separate concerns.
 
 ## Project Structure
 ```
